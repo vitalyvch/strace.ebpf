@@ -348,6 +348,9 @@ main(int argc, char *argv[])
 		return -1;
 	}
 
+	if (NULL != getenv("WAIT_TRACE_PY"))
+		raise(SIGSTOP);
+
 	printf("Starting: test_%i ...\n", n);
 
 	run_test[n]();
