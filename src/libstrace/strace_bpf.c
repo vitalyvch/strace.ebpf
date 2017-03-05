@@ -121,10 +121,6 @@ attach_callback_to_perf_output(struct bpf_ctx *sbcp,
 		return -1;
 	}
 
-	/*
-	 * XXX It can be reasonable to replace sysconf with sched_getaffinity().
-	 *    It will allow us to ignore non-actual CPUs.
-	 */
 	long cpu_qty = sysconf(_SC_NPROCESSORS_ONLN);
 
 	if (!pr_arr_check_quota(sbcp, (unsigned)cpu_qty)) {
