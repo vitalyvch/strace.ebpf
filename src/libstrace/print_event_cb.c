@@ -388,7 +388,7 @@ get_type_of_arg1(unsigned sc_num)
 	if (Syscall_array[sc_num].args_qty >= 1)
 		return EAT_int;
 
-	/* Syscall doesn't have this arg. Print nothing. */
+	/* Syscall doesn't have this arg. Don't print anything. */
 	return EAT_absent;
 }
 
@@ -424,7 +424,7 @@ fprint_arg1_hex(FILE *f, struct ev_dt_t *const event, int size)
 			break;
 
 		case EAT_absent:
-			/* Syscall doesn't have this arg. Print nothing. */
+			/* Syscall doesn't have this arg. Don't print anything. */
 			break;
 		}
 		break;
@@ -451,7 +451,7 @@ get_type_of_arg2(unsigned sc_num)
 	if (Syscall_array[sc_num].args_qty >= 2)
 		return EAT_int;
 
-	/* Syscall doesn't have this arg. Print nothing. */
+	/* Syscall doesn't have this arg. Don't print anything. */
 	return EAT_absent;
 }
 
@@ -508,7 +508,7 @@ fprint_arg2_hex(FILE *f, struct ev_dt_t *const event, int size)
 			break;
 
 		case EAT_absent:
-			/* Syscall doesn't have this arg. Print nothing. */
+			/* Syscall doesn't have this arg. Don't print anything. */
 			break;
 		}
 		break;
@@ -528,7 +528,7 @@ get_type_of_arg3(unsigned sc_num)
 	if (Syscall_array[sc_num].args_qty >= 3)
 		return EAT_int;
 
-	/* Syscall doesn't have this arg. Print nothing. */
+	/* Syscall doesn't have this arg. Don't print anything. */
 	return EAT_absent;
 }
 
@@ -582,7 +582,7 @@ fprint_arg3_hex(FILE *f, struct ev_dt_t *const event, int size)
 			break;
 
 		case EAT_absent:
-			/* Syscall doesn't have this arg. Print nothing. */
+			/* Syscall doesn't have this arg. Don't print anything. */
 			break;
 		}
 		break;
@@ -602,7 +602,7 @@ get_type_of_arg4(unsigned sc_num)
 	if (Syscall_array[sc_num].args_qty >= 4)
 		return EAT_int;
 
-	/* Syscall doesn't have this arg. Print nothing. */
+	/* Syscall doesn't have this arg. Don't print anything. */
 	return EAT_absent;
 }
 
@@ -656,7 +656,7 @@ fprint_arg4_hex(FILE *f, struct ev_dt_t *const event, int size)
 			break;
 
 		case EAT_absent:
-			/* Syscall doesn't have this arg. Print nothing. */
+			/* Syscall doesn't have this arg. Don't print anything. */
 			break;
 		}
 		break;
@@ -672,7 +672,7 @@ get_type_of_arg5(unsigned sc_num)
 	if (Syscall_array[sc_num].args_qty >= 5)
 		return EAT_int;
 
-	/* Syscall doesn't have this arg. Print nothing. */
+	/* Syscall doesn't have this arg. Don't print anything. */
 	return EAT_absent;
 }
 
@@ -725,7 +725,7 @@ fprint_arg5_hex(FILE *f, struct ev_dt_t *const event, int size)
 			break;
 
 		case EAT_absent:
-			/* Syscall doesn't have this arg. Print nothing. */
+			/* Syscall doesn't have this arg. Don't print anything. */
 			break;
 		}
 		break;
@@ -741,7 +741,7 @@ get_type_of_arg6(unsigned sc_num)
 	if (Syscall_array[sc_num].args_qty >= 6)
 		return EAT_int;
 
-	/* Syscall doesn't have this arg. Print nothing. */
+	/* Syscall doesn't have this arg. Don't print anything. */
 	return EAT_absent;
 }
 
@@ -794,7 +794,7 @@ fprint_arg6_hex(FILE *f, struct ev_dt_t *const event, int size)
 			break;
 
 		case EAT_absent:
-			/* Syscall doesn't have this arg. Print nothing. */
+			/* Syscall doesn't have this arg. Don't print anything. */
 			break;
 		}
 		break;
@@ -931,7 +931,7 @@ print_event_hex_sl(void *cb_cookie, void *data, int size)
 /*
  * XXX We should think about writing 64-bit packet number before length
  *    of packet, but there is probability that counting packets will be very
- *    expensive, because we run in multi-threaded environment.
+ *    expensive, because we run in multi-thread environment.
  */
 
 /*

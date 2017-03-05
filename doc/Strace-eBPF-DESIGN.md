@@ -8,7 +8,7 @@ Why we need new tool
 ---------------------
 
  - regular system tracing tools are slow
- - regular tools slowdown traced application for few orders of magnitude
+ - regular tools slow down traced application by few orders of magnitude
  - output of regular tools is human-oriented and don't assume automated
    processing
  - overcoming above problems in regular way require:
@@ -43,7 +43,7 @@ Pros
 
  - Used combination of technologies allow tool to be about one order
    of magnitude faster than regular system strace.
- - Consumes much less amount of CPU resource.
+ - Consumes much less amount of CPU resources.
  - Output is designed to be suitable for processing with classical tools
    and technologies, like awk.
  - Can trace syscalls system-wide.
@@ -87,4 +87,4 @@ Conclusion
 
  - we reached performance more than 1000000 syscalls per second.
  - we introduce about 750 nanosec of penalty in each syscall.
- - there is places for future optimization.
+ - there is space for future optimizations.

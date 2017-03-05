@@ -51,7 +51,7 @@ struct ev_dt_t {
 	 *    a series of packets for every syscall.
 	 *
 	 * It is needed because stack size is limited to 512 bytes and used part
-	 * of the stack is initialized with zeros on every call of syscall handlers.
+	 * of the stack is initialized with zero on every call of syscall handlers.
 	 *
 	 * the value equal to 0 means that this is "single-packet" syscall
 	 *    and there will be no additional packets sent.
@@ -66,13 +66,12 @@ struct ev_dt_t {
 	s64 packet_type;
 
 	/*
-	 * Syscall's signature. All packets with the same signature belong to a same
-	 *    call of the same syscall.
-	 *    We need two timestamps here, because syscalls can nest
+	 * Syscall's signature. All packets with the same signature belong to one
+	 *    syscall. We need two time stamps here, because syscalls can nest
 	 *    from one pid_tid by calling syscall from signal handler, before
 	 *    syscall called from main context has returned.
 	 *
-	 * XXX By the fact sc_id is not needed here, but its presence simplifies
+	 * XXX In fact sc_id is not needed here, but its presence simplifies
 	 *    a lot of processing, so let's keep it here.
 	 */
 	struct {
