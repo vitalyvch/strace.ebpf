@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 #
 # Copyright 2017, Intel Corporation
 #
@@ -64,13 +64,13 @@ COMMON=$TEST_DIR/common.sh
 source $COMMON
 source $FUNCT
 
-PATTERN_START="close 0000000012345678"
-PATTERN_END="close 0000000087654321"
+PATTERN_START='close *12345678'
+PATTERN_END='close *87654321'
 OUT=output-$TEST_NUM.log
 OUT_BARE=output-bare-$TEST_NUM.log
 OUT_SORT=output-sort-$TEST_NUM.log
 
-OPT_TRACE_PY="-t sys_futex 'r::sys_futex \"%llx\", retval' sys_poll 'r::sys_poll \"%llx\", retval'"
+OPT_TRACE_PY="-t 'sys_close \"%llx\", arg1' sys_futex 'r::sys_futex \"retval=%llx\", retval' sys_poll 'r::sys_poll \"retval=%llx\", retval'"
 
 # XXX drop hard-coded path
 export PATH="${PATH}:/home/vitalii/projects/bcc/tools/"
@@ -92,10 +92,10 @@ WAIT_TRACE_PY=1 $TEST_FILE $TEST_NUM >/dev/null &
 
 TEST_PID=$!
 
-RUN_TRACE_PY="ulimit -l 10240 && ulimit -n 10240 && $TRACE_PY -p $TEST_PID ${OPT_TRACE_PY}"
+RUN_TRACE_PY="ulimit -l 10240 && ulimit -n 10240 && stdbuf -o L $TRACE_PY -p $TEST_PID ${OPT_TRACE_PY}"
 
-echo "# sudo bash -c \"$RUN_TRACE_PY\" >$OUT &"
-sudo bash -c "$RUN_TRACE_PY" >$OUT &
+echo "# sudo bash -c \"$RUN_TRACE_PY\" >$OUT 2>&1 &"
+sudo bash -c "$RUN_TRACE_PY" >$OUT 2>&1 &
 
 sleep 1
 
@@ -105,7 +105,7 @@ wait $TEST_PID
 
 sudo pkill -INT trace.py
 
-grep -v -e "PID.*TID" -e "$OUT" $OUT > $OUT_BARE
+grep -v -e 'PID.*TID' -e "$OUT" $OUT > $OUT_BARE
 
 # tests without fork()
 sort $OUT_BARE -o $OUT_SORT
