@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 #
 # Copyright 2017, Intel Corporation
 #
@@ -87,15 +87,17 @@ require_superuser
 rm -f *-$TEST_NUM.log
 
 # run tests
-echo "# WAIT_TRACE_PY=1 $TEST_FILE $TEST_NUM >/dev/null &"
+#echo "# WAIT_TRACE_PY=1 $TEST_FILE $TEST_NUM >/dev/null &"
 WAIT_TRACE_PY=1 $TEST_FILE $TEST_NUM >/dev/null &
 
 TEST_PID=$!
 
-RUN_TRACE_PY="ulimit -l 10240 && ulimit -n 10240 && stdbuf -o L $TRACE_PY -p $TEST_PID ${OPT_TRACE_PY}"
+RUN_TRACE_PY="ulimit -l 10240 && ulimit -n 10240 && exec stdbuf -o L $TRACE_PY -p $TEST_PID ${OPT_TRACE_PY}"
 
-echo "# sudo bash -c \"$RUN_TRACE_PY\" >$OUT 2>&1 &"
+#echo "# sudo bash -c \"$RUN_TRACE_PY\" >$OUT 2>&1 &"
 sudo bash -c "$RUN_TRACE_PY" >$OUT 2>&1 &
+
+TRACE_PY_PID=$!
 
 sleep 1
 
@@ -103,7 +105,16 @@ kill -CONT $TEST_PID
 
 wait $TEST_PID 
 
-sudo pkill -INT trace.py
+sudo pkill -INT -f "^python.*trace.py"
+
+sleep 1
+
+#XXX SIGINT does not work for unknown reason.
+# So, let's do -KILL and manual cleanup.
+sudo pkill -KILL -f "^python.*trace.py" >/dev/null 2>&1
+#XXX Manual clean-up
+
+wait $TRACE_PY_PID  >/dev/null 2>&1
 
 grep -v -e 'PID.*TID' -e "$OUT" $OUT > $OUT_BARE
 
