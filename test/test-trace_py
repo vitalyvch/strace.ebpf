@@ -112,7 +112,9 @@ sleep 1
 #XXX SIGINT does not work for unknown reason.
 # So, let's do -KILL and manual cleanup.
 sudo pkill -KILL -f "^python.*trace.py" >/dev/null 2>&1
-#XXX Manual clean-up
+#XXX HACK. Manual clean-up
+# clear all probe points
+sudo bash -c "echo > /sys/kernel/debug/tracing/kprobe_events"
 
 wait $TRACE_PY_PID  >/dev/null 2>&1
 
