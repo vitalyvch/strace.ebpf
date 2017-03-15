@@ -208,8 +208,7 @@ main(const int argc, char *const argv[])
 	 * Attach callback to perf output. "events" is a name of class declared
 	 * with BPF_PERF_OUTPUT() in ebpf/trace_head.c.
 	 *
-	 * XXX Probably we should utilise str_replace here for consistence
-	 *    increasing.
+	 * XXX We should use str_replace here.
 	 */
 #define PERF_OUTPUT_NAME "events"
 	int res = attach_callback_to_perf_output(b,
