@@ -1,5 +1,0 @@
-USAGE:
-    strace.ebpf -h
-    strace.ebpf [-t] [-p PID] [command [arg ...]]
-
-WARNING: System-wide tracing can fillout your disk really fast.
